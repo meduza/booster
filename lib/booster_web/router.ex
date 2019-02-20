@@ -1,5 +1,6 @@
 defmodule ABWeb.Router do
   use ABWeb, :router
+  alias ABWeb.Plugs.DeviceToken
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,15 +14,18 @@ defmodule ABWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :device_token do
+    plug DeviceToken
+  end
+
   scope "/", ABWeb do
     pipe_through :browser
-
     get "/", PageController, :index
   end
 
 
   scope "/api", ABWeb do
-    pipe_through :api
+    pipe_through [:api, :device_token]
     resources "/devices", DeviceController, except: [:new, :edit]
     resources "/experiments", ExperimentController, except: [:new, :edit]
   end

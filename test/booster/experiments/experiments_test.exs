@@ -1,6 +1,5 @@
 defmodule AB.ExperimentsTest do
   use AB.DataCase
-
   alias AB.Experiments
 
   describe "experiments" do
