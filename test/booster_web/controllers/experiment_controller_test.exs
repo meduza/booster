@@ -1,8 +1,6 @@
 defmodule ABWeb.ExperimentControllerTest do
   use ABWeb.ConnCase
-
   alias AB.Experiments
-  alias AB.Experiments.Experiment
 
   @create_attrs %{
   	description: "Button color AB test",

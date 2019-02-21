@@ -23,11 +23,11 @@ defmodule ABWeb.Router do
     get "/", PageController, :index
   end
 
-
   scope "/api", ABWeb do
     pipe_through [:api, :device_token]
+
+    get "/report", ReportController, :index
     get "/device/experiments", DeviceController, :index
-    # resources "/devices", DeviceController, except: [:new, :edit]
     resources "/experiments", ExperimentController, except: [:new, :edit]
   end
 end

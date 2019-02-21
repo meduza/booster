@@ -1,6 +1,6 @@
 # Booster
 
-Для запуска приложения:
+Инсталяция и запуск приложения:
 
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.setup`
@@ -12,20 +12,87 @@
 
 # API
 
-API работает по протоколу HTTP. Все ответы приходят в виде JSON структур.
-
+API работает по протоколу HTTP. Обмен данными проиcходит в виде JSON структур. При обращении к API, в заголовке нужно явно указать "Content-type": "application/json"
 
 ### Основной URL
-Все  запросы к API включают основной URL. API принимает данные в формате application/json
+Все  запросы к API включают основной URL:
 ```
 http://localhost:4000/api
 ```
+### API.Endpoints
 
-### Experiments
+* [API.Reports](#reports)
+* [API.Devices](#devices)
+* [API.Experiments](#experiments)
+
+#### Reports
+```
+  GET /reports
+```
+Возвращает статистику по экспериментам, колличество устройств, распределение устройств по опциям. Пример ответа:
+```javascript
+{
+    "data": [
+        {
+            "experiment_id": 2,
+            "key": "price",
+            "options": {
+                "10": 4,
+                "20": 2,
+                "50": 1
+            },
+            "total_devices": 7
+        },
+        {
+            "experiment_id": 1,
+            "key": "button_color",
+            "options": {
+                "#0000FF": 2,
+                "#00FF00": 4,
+                "#FF0000": 2
+            },
+            "total_devices": 8
+        }
+    ]
+}
+````
+
+
+#### Devices
+```
+GET /device/experiments
+```
+Принимает запрос от устройства на доступные AB эксперименты. В случае, если устройство было ранее зарегистрированно, ему будет возвращен списом экспериментов и опций, которое оно получило при первом обращении, если устройство обращается впервые, оно получит список всех доступных экспериментов на данный момент с опциями, распределенными в процентной вариативности. В любом случае, при успешном запросе, структура ответа будет примерно следующая:
+
+```javascript
+{
+    "data": [
+        {
+            "key": "button_color",
+            "value": "#00FF00"
+        },
+        {
+            "key": "price",
+            "value": "10"
+        }
+    ]
+}
+```
+
+Для корректного ответа требует наличия в HTTP Header параметра "Device-token". В противном случае, возвращает ошибку:
+
+```javascript
+{
+    "error": "device_token_not_found"
+}
+```
+
+
+#### Experiments
 ```
 GET /experiments
 ```
-Возвращает список всех доступных AB экспериментов. Пример ответа:
+Возвращает список всех доступных AB экспериментов с опциями. Пример ответа:
 ```javascript
 {
   "data": [
@@ -90,5 +157,16 @@ POST /experiments
   	 	  {"value": "#00FF00", "percentage": 33},
   	 	  {"value": "#0000FF", "percentage": 33}]
    }
+}
+```
+
+Пример ответа в случае ошибки:
+```javascript
+{
+    "errors": {
+        "key": [
+            "has already been taken"
+        ]
+    }
 }
 ```

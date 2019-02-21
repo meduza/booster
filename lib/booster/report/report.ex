@@ -8,7 +8,15 @@ defmodule AB.Report do
   alias AB.Options.Option
   alias AB.Experiments.Experiment
 
+  @doc """
+  Returns Experiments Statistic by Device
 
+  Да, здесь есть костыль, запорс к БД не возвращает
+  данные, в необходимом формате, приходится
+  парсить колонку options, чтобы посчитать кол-во устройств по опциям.
+  Уверен, что это можно сделать средствами БД, но еще вопрос, что будет быстрее.
+  В запросе все данные получены, запрос лаконичный, понятный и быстрый...
+  """
   def get() do
     query = from e in Experiment,
             join: d in Device,
