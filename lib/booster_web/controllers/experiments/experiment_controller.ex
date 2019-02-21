@@ -27,7 +27,6 @@ defmodule ABWeb.ExperimentController do
 
   def update(conn, %{"id" => id, "experiment" => experiment_params}) do
     experiment = Experiments.get_experiment!(id)
-
     with {:ok, %Experiment{} = experiment} <- Experiments.update_experiment(experiment, experiment_params) do
       render(conn, "show.json", experiment: experiment)
     end
@@ -39,4 +38,5 @@ defmodule ABWeb.ExperimentController do
       send_resp(conn, :no_content, "")
     end
   end
+
 end
