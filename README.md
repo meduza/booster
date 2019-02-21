@@ -25,6 +25,9 @@ http://localhost:4000/api
 * [API.Devices](#devices)
 * [API.Experiments](#experiments)
 
+### WEB.Endpoint
+* [Web.Reports](#web_reports)
+
 #### Reports
 ```
   GET /reports
@@ -169,4 +172,10 @@ POST /experiments
         ]
     }
 }
+```
+
+#### Web.reports
+При http запросе доступна статистика в html формате.
+```
+http://localhost:4000
 ```
