@@ -26,7 +26,10 @@ http://localhost:4000/api
 * [API.Experiments](#experiments)
 
 ### WEB.Endpoint
-* [Web.Reports](#web_reports)
+При http запросе доступна статистика в html формате.
+```
+http://localhost:4000
+```
 
 #### Reports
 ```
@@ -172,10 +175,4 @@ POST /experiments
         ]
     }
 }
-```
-
-#### Web.reports
-При http запросе доступна статистика в html формате.
-```
-http://localhost:4000
 ```
