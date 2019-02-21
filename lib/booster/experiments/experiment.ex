@@ -17,5 +17,6 @@ defmodule AB.Experiments.Experiment do
     |> cast(attrs, [:key, :description])
     |> cast_assoc(:options)
     |> validate_required([:key, :description, :options])
+    |> unique_constraint(:key, name: :experiments_key_index)
   end
 end

@@ -5,20 +5,83 @@ defmodule AB.Devices do
 
   import Ecto.Query, warn: false
   alias AB.Repo
-
   alias AB.Devices.Device
 
   @doc """
   Returns the list of devices.
 
   ## Examples
-
       iex> list_devices()
       [%Device{}, ...]
-
   """
   def list_devices do
     Repo.all(Device)
+  end
+
+  @doc """
+  Find or register new device.
+  Returns deices with experiment and option
+  """
+  def find_or_register_device(token \\ "s1") do
+    case list_devices_experiments(token) do
+      {:ok, devices} ->
+        {:ok, devices}
+      :not_found ->
+        with {_, _} = register_device!(token) do
+          find_or_register_device(token)
+        end
+    end
+  end
+
+  @doc """
+  Registers a new device with available experiments and options
+  """
+  def register_device!(token) do
+    now = NaiveDateTime.truncate(NaiveDateTime.utc_now, :second)
+    devices_attr = AB.Options.Dispatcher.get()
+      |> Enum.map(&Map.merge(&1, %{token: token, inserted_at: now, updated_at: now}))
+    Repo.insert_all(Device, devices_attr)
+  end
+
+  @doc """
+  List devices by token with experiment and option preloaded
+  """
+  def list_devices_experiments!(token \\ "s1") do
+    query = from d in Device,
+            where: d.token == ^token,
+            preload: [:option, :experiment]
+    Repo.all(query)
+  end
+
+  @doc """
+  List devices by token with experiment and option
+  """
+  def list_devices_experiments(token \\ "s1") do
+    case list_devices_experiments!(token) do
+           [] -> :not_found
+      devices -> {:ok, devices}
+    end
+  end
+
+  @doc """
+  Gets devices by token
+  """
+  def list_devices_by_token!(token) do
+    query = from d in Device,
+            where: d.token == ^token,
+            preload: [:option]
+    Repo.all(query)
+  end
+
+  @doc """
+  Gets devices by token,
+  return tuple
+  """
+  def list_devices_by_token(token) do
+    case list_devices_by_token!(token) do
+           [] -> {:error, "Device not found"}
+      devices -> {:ok, devices}
+    end
   end
 
   @doc """

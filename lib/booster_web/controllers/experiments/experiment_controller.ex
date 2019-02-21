@@ -35,7 +35,6 @@ defmodule ABWeb.ExperimentController do
 
   def delete(conn, %{"id" => id}) do
     experiment = Experiments.get_experiment!(id)
-
     with {:ok, %Experiment{}} <- Experiments.delete_experiment(experiment) do
       send_resp(conn, :no_content, "")
     end

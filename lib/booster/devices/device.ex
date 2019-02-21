@@ -8,6 +8,7 @@ defmodule AB.Devices.Device do
     field :token, :string
     belongs_to :option, Option
     belongs_to :experiment, Experiment
+    has_many :options, through: [:experiment, :options]
     timestamps()
   end
 
@@ -16,6 +17,7 @@ defmodule AB.Devices.Device do
     device
     |> cast(attrs, [:token, :experiment_id, :option_id])
     |> validate_required([:token, :experiment_id, :option_id])
+    |> unique_constraint(:token, name: :device_token_experiment_id_index)
   end
 
 end

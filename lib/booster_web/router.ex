@@ -26,7 +26,8 @@ defmodule ABWeb.Router do
 
   scope "/api", ABWeb do
     pipe_through [:api, :device_token]
-    resources "/devices", DeviceController, except: [:new, :edit]
+    get "/device/experiments", DeviceController, :index
+    # resources "/devices", DeviceController, except: [:new, :edit]
     resources "/experiments", ExperimentController, except: [:new, :edit]
   end
 end

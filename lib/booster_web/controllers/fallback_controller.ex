@@ -19,4 +19,12 @@ defmodule ABWeb.FallbackController do
     |> put_view(ABWeb.ErrorView)
     |> render(:"404")
   end
+
+
+  def call(conn, {:error, error}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> put_view(ABWeb.ChangesetView)
+    |> render("error.json", error: error)
+  end
 end

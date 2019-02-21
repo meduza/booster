@@ -11,9 +11,9 @@ defmodule ABWeb.DeviceView do
   end
 
   def render("device.json", %{device: device}) do
-    %{id: device.id,
-      token: device.token,
-      experiment_id: device.experiment_id,
-      option_id: device.option_id}
+    %{
+      key: device.experiment.key,
+      value: device.option.value
+    }
   end
 end

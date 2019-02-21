@@ -53,6 +53,11 @@ defmodule AB.DevicesTest do
       assert Devices.get_device!(device.id) == device
     end
 
+    test "list_devices_by_token!/1 returns the devices with given token" do
+      device = device_fixture()
+      assert length(Devices.list_devices_by_token!(device.token)) == 1
+    end
+
     test "create_device/1 with valid data creates a device" do
       option = experiment_fixture().options |> List.first()
       assert {:ok, %Device{} = device} = Devices.create_device(
