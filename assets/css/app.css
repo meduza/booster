@@ -7,6 +7,10 @@
   font-family: sans-serif;
 }
 
+h1{
+  font-size: 4rem;
+  font-weight: 900;
+}
 
 .table{
   width: 100%;
@@ -18,7 +22,11 @@
 .table tr{
   border-bottom: 1px solid #ccc;
 }
-
+.table th{
+  font-family: georgia;
+  font-style: italic;
+  color: #999;
+}
 .table th, td{
   text-align: left;
   padding: 1rem
