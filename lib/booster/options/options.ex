@@ -2,10 +2,8 @@ defmodule AB.Options do
   @moduledoc """
   The Options context.
   """
-
   import Ecto.Query, warn: false
   alias AB.Repo
-
   alias AB.Options.Option
 
   @doc """

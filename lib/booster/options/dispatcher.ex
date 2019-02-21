@@ -1,6 +1,6 @@
 defmodule AB.Options.Dispatcher do
   @moduledoc """
-  Device options dispatcher module
+  Device experiments option dispatcher module.
   """
   alias AB.Experiments
   alias AB.Devices.Device
@@ -15,14 +15,12 @@ defmodule AB.Options.Dispatcher do
     |> Enum.map(&(Map.take(&1, [:experiment_id, :option_id])))
   end
 
-
   defp get_device_options(experiments) do
     Enum.map(experiments, fn(experiment)->
       %Device{experiment_id: experiment.id,
         option_id: get_option_id(experiment.options)}
     end)
   end
-
 
   # Accepts List of experiment options
   # and returns one by percentage variation

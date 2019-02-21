@@ -3,7 +3,6 @@ defmodule AB.Options.Option do
   import Ecto.Changeset
   alias AB.Experiments.Experiment
 
-
   schema "options" do
     field :value, :string
     field :percentage, :integer
