@@ -9,6 +9,17 @@
 
 Откройте [`localhost:4000`](http://localhost:4000) в вашем браузере.
 
+# Demo
+Демо версия развернута на Heroku:
+```
+https://radiant-lowlands-36173.herokuapp.com/
+```
+
+# Web
+Статистика устройств по экспериментам и опция доступна на главной странице:
+```
+http://localhost:4000
+```
 
 # API
 
@@ -19,17 +30,16 @@ API работает по протоколу HTTP. Обмен данными п�
 ```
 http://localhost:4000/api
 ```
+или
+```
+https://radiant-lowlands-36173.herokuapp.com/api
+```
 ### API.Endpoints
 
 * [API.Reports](#reports)
 * [API.Devices](#devices)
 * [API.Experiments](#experiments)
 
-### WEB.Endpoint
-При http запросе доступна статистика в html формате.
-```
-http://localhost:4000
-```
 
 #### Reports
 ```
